@@ -1,5 +1,5 @@
 /**
- * Scripts gerais da aplicação Mega-Sena
+ * Scripts gerais da aplicação Quina
  * Funções utilitárias e helpers
  */
 
@@ -27,16 +27,16 @@ function formatarData(data) {
     }
 }
 
-// Valida número da Mega-Sena (1-60)
+// Valida número da Quina (1-80)
 function validarNumero(numero) {
     const num = parseInt(numero);
-    return !isNaN(num) && num >= 1 && num <= 60;
+    return !isNaN(num) && num >= 1 && num <= 80;
 }
 
 // Valida jogo completo
 function validarJogo(numeros) {
     if (!Array.isArray(numeros)) return false;
-    if (numeros.length < 6 || numeros.length > 20) return false;
+    if (numeros.length < 5 || numeros.length > 15) return false;
     
     // Verifica duplicados
     const unicos = new Set(numeros);

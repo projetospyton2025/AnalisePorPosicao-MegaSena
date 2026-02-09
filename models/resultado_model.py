@@ -1,5 +1,5 @@
 """
-Model para armazenar resultados da Mega-Sena
+Model para armazenar resultados da Quina
 Inclui TODOS os campos da API oficial da Caixa
 """
 import sqlite3
@@ -9,7 +9,7 @@ from config import Config
 
 
 class ResultadoModel:
-    """Model para gerenciar resultados da Mega-Sena no banco de dados"""
+    """Model para gerenciar resultados da Quina no banco de dados"""
     
     def __init__(self):
         self.db_path = Config.DATABASE_PATH

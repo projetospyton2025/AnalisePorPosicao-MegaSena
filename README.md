@@ -1,6 +1,6 @@
-# 🎲 Sistema Mega-Sena - Análise por Posição
+# 🎲 Sistema Quina - Análise por Posição
 
-Sistema completo em Python para geração e conferência de jogos da **Mega-Sena**, com análises estatísticas baseadas em dados reais da API oficial da Caixa Econômica Federal.
+Sistema completo em Python para geração e conferência de jogos da **Quina**, com análises estatísticas baseadas em dados reais da API oficial da Caixa Econômica Federal.
 
 ## 📥 COMO BAIXAR O PROJETO
 
@@ -45,7 +45,7 @@ cd AnalisePorPosicao-MegaSena
 - ✅ Análises estatísticas completas (frequência, atrasos, pares/ímpares)
 - ✅ Análise por faixa de posição (01-10, 11-20, etc.)
 - ✅ Análise por primeiro dígito
-- ✅ Análise por posição do sorteio (1ª a 6ª bola)
+- ✅ Análise por posição do sorteio (1ª a 5ª bola)
 - ✅ Interface web responsiva com cores oficiais
 - ✅ Conferência de jogos com resultados
 - ✅ Arquitetura modular com Flask Blueprints
@@ -74,7 +74,7 @@ cd AnalisePorPosicao-MegaSena
 ├── services/
 │   ├── api_caixa_service.py       # Integração com API
 │   ├── estatistica_service.py     # Cálculos estatísticos
-│   └── megasena_service.py        # Geração de palpites
+│   └── quina_service.py        # Geração de palpites
 ├── routes/
 │   ├── main_routes.py             # Rotas HTML
 │   └── api_routes.py              # Rotas API REST
@@ -136,7 +136,7 @@ A aplicação estará disponível em: **http://localhost:5056**
 ### Interface Web
 
 #### Página de Resultados (`/`)
-- Visualize todos os resultados da Mega-Sena
+- Visualize todos os resultados da Quina
 - Atualize a base de dados com a API oficial
 - Veja números sorteados em ordem crescente e ordem do sorteio
 - Consulte ganhadores e valores de premiação
@@ -251,7 +251,7 @@ Confere um jogo com resultado de um concurso.
   "numeros_sorteados": [1, 6, 24, 27, 28, 57],
   "acertos": [1, 6, 24, 27, 28, 57],
   "quantidade_acertos": 6,
-  "premiacao": "Sena (6 acertos)"
+  "premiacao": "Quina (5 acertos)"
 }
 ```
 
@@ -296,30 +296,30 @@ Número 60
 ```
 
 ### 6. Análise por Posição do Sorteio
-- Estatísticas de cada bola (1ª a 6ª)
+- Estatísticas de cada bola (1ª a 5ª)
 - Quais números saem mais em cada posição
 - Usa `dezenasSorteadasOrdemSorteio` da API
 
 ## 🎨 Identidade Visual
 
 ### Cor Principal
-**#1B9A67** - Verde oficial da Mega-Sena
+**#260184** - Verde oficial da Quina
 
 ### Paleta Completa
-A aplicação utiliza uma escala completa de tons de verde, do mais claro ao mais escuro, seguindo a identidade visual oficial da Mega-Sena.
+A aplicação utiliza uma escala completa de tons de verde, do mais claro ao mais escuro, seguindo a identidade visual oficial da Quina.
 
 ### Logo Oficial
-![Mega-Sena](https://i.postimg.cc/VkSZr7z6/megasena.png)
+![Quina](https://i.postimg.cc/VkSZr7z6/quina.png)
 
-## 🎯 Regras da Mega-Sena
+## 🎯 Regras da Quina
 
 - **60 números disponíveis:** 01 a 60
-- **6 números sorteados** por concurso
-- Jogador escolhe de **6 a 20 números**
-- Jogos mais comuns: 6, 7, 8, 9, 10 números
+- **5 números sorteados** por concurso
+- Jogador escolhe de **5 a 15 números**
+- Jogos mais comuns: 5, 6, 7, 8, 9 números
 
 ### Faixas de Premiação
-1. **Sena (6 acertos)** - Prêmio principal
+1. **Quina (5 acertos)** - Prêmio principal
 2. **Quina (5 acertos)** - Prêmio secundário
 3. **Quadra (4 acertos)** - Prêmio terciário
 
@@ -365,10 +365,10 @@ Para dúvidas ou sugestões:
 
 ## 🎲 Aviso Legal
 
-Este sistema é apenas para fins educacionais e de entretenimento. Os palpites gerados são baseados em análises estatísticas históricas, mas **não garantem** ganhos em apostas reais. A Mega-Sena é um jogo de azar e todos os resultados são completamente aleatórios.
+Este sistema é apenas para fins educacionais e de entretenimento. Os palpites gerados são baseados em análises estatísticas históricas, mas **não garantem** ganhos em apostas reais. A Quina é um jogo de azar e todos os resultados são completamente aleatórios.
 
 **Jogue com responsabilidade!**
 
 ---
 
-**Desenvolvido com ❤️ para análise de dados da Mega-Sena**
+**Desenvolvido com ❤️ para análise de dados da Quina**

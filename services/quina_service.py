@@ -1,5 +1,5 @@
 """
-Service para geração de palpites da Mega-Sena
+Service para geração de palpites da Quina
 Implementa diferentes estratégias baseadas em estatísticas reais
 """
 import random
@@ -9,7 +9,7 @@ from services.estatistica_service import EstatisticaService
 from models.resultado_model import ResultadoModel
 
 
-class MegaSenaService:
+class QuinaService:
     """Service para geração e conferência de palpites"""
     
     def __init__(self):
@@ -19,7 +19,7 @@ class MegaSenaService:
     def gerar_palpite(
         self,
         estrategia: str = 'equilibrada',
-        quantidade_numeros: int = 6,
+        quantidade_numeros: int = 5,
         quantidade_jogos: int = 1
     ) -> Dict:
         """
@@ -27,7 +27,7 @@ class MegaSenaService:
         
         Args:
             estrategia: Tipo de estratégia (equilibrada, agressiva, conservadora, etc)
-            quantidade_numeros: Quantidade de números por jogo (6-20)
+            quantidade_numeros: Quantidade de números por jogo (5-15)
             quantidade_jogos: Quantidade de jogos a gerar
             
         Returns:
@@ -193,12 +193,12 @@ class MegaSenaService:
     def _estrategia_por_faixa(self, quantidade: int, stats: Dict) -> List[int]:
         """Garante pelo menos um número de cada faixa"""
         faixas_ranges = [
-            (1, 10), (11, 20), (21, 30),
-            (31, 40), (41, 50), (51, 60)
+            (1, 16), (17, 32), (33, 48),
+            (49, 64), (65, 80)
         ]
         
         numeros = set()
-        numeros_por_faixa = max(1, quantidade // 6)
+        numeros_por_faixa = max(1, quantidade // 5)
         
         for min_num, max_num in faixas_ranges:
             for _ in range(numeros_por_faixa):
@@ -215,11 +215,12 @@ class MegaSenaService:
         """Distribui por primeiro dígito"""
         digitos_ranges = [
             (1, 9), (10, 19), (20, 29),
-            (30, 39), (40, 49), (50, 60)
+            (30, 39), (40, 49), (50, 59),
+            (60, 69), (70, 80)
         ]
         
         numeros = set()
-        numeros_por_digito = max(1, quantidade // 6)
+        numeros_por_digito = max(1, quantidade // 8)
         
         for min_num, max_num in digitos_ranges:
             for _ in range(numeros_por_digito):
@@ -283,12 +284,14 @@ class MegaSenaService:
         
         # Define premiação
         premiacao = None
-        if qtd_acertos == 6:
-            premiacao = 'Sena (6 acertos)'
-        elif qtd_acertos == 5:
+        if qtd_acertos == 5:
             premiacao = 'Quina (5 acertos)'
         elif qtd_acertos == 4:
             premiacao = 'Quadra (4 acertos)'
+        elif qtd_acertos == 3:
+            premiacao = 'Terno (3 acertos)'
+        elif qtd_acertos == 2:
+            premiacao = 'Duque (2 acertos)'
         
         return {
             'sucesso': True,

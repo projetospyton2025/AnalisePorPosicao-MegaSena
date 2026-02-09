@@ -1,5 +1,5 @@
 """
-Aplicação principal Flask - Sistema Mega-Sena
+Aplicação principal Flask - Sistema Quina
 Servidor rodando na porta 5056
 """
 from flask import Flask
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     app = create_app()
     print(f"""
     ═══════════════════════════════════════════════════
-    🎲 Sistema Mega-Sena - Análise por Posição
+    🎲 Sistema Quina - Análise por Posição
     ═══════════════════════════════════════════════════
     
     ✓ Servidor rodando em: http://{Config.HOST}:{Config.PORT}

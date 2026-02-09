@@ -1,5 +1,5 @@
 """
-Service para cálculo de estatísticas da Mega-Sena
+Service para cálculo de estatísticas da Quina
 Análises: frequência, atrasos, pares/ímpares, por faixa, por dígito, por posição
 """
 from typing import Dict, List
@@ -9,7 +9,7 @@ from config import Config
 
 
 class EstatisticaService:
-    """Service para análises estatísticas da Mega-Sena"""
+    """Service para análises estatísticas da Quina"""
     
     def __init__(self):
         self.model = ResultadoModel()
@@ -38,7 +38,7 @@ class EstatisticaService:
     
     def calcular_frequencia_numeros(self, resultados: List[Dict]) -> Dict:
         """
-        Calcula frequência de cada número (01-60)
+        Calcula frequência de cada número (01-80)
         
         Args:
             resultados: Lista de resultados
@@ -53,7 +53,7 @@ class EstatisticaService:
             dezenas = [int(d) for d in resultado.get('listaDezenas', [])]
             frequencias.update(dezenas)
         
-        # Monta lista completa de 1 a 60
+        # Monta lista completa de 1 a 80
         frequencia_completa = []
         for num in range(1, Config.MAX_NUMEROS + 1):
             count = frequencias.get(num, 0)
@@ -161,7 +161,7 @@ class EstatisticaService:
     def calcular_por_faixa(self, resultados: List[Dict]) -> Dict:
         """
         Calcula distribuição por faixas de números
-        Faixa 1: 01-10, Faixa 2: 11-20, ..., Faixa 6: 51-60
+        Faixa 1: 01-16, Faixa 2: 17-32, Faixa 3: 33-48, Faixa 4: 49-64, Faixa 5: 65-80
         
         Args:
             resultados: Lista de resultados
@@ -170,12 +170,11 @@ class EstatisticaService:
             Dict com estatísticas por faixa
         """
         faixas = {
-            1: {'range': '01-10', 'min': 1, 'max': 10, 'count': 0},
-            2: {'range': '11-20', 'min': 11, 'max': 20, 'count': 0},
-            3: {'range': '21-30', 'min': 21, 'max': 30, 'count': 0},
-            4: {'range': '31-40', 'min': 31, 'max': 40, 'count': 0},
-            5: {'range': '41-50', 'min': 41, 'max': 50, 'count': 0},
-            6: {'range': '51-60', 'min': 51, 'max': 60, 'count': 0}
+            1: {'range': '01-16', 'min': 1, 'max': 16, 'count': 0},
+            2: {'range': '17-32', 'min': 17, 'max': 32, 'count': 0},
+            3: {'range': '33-48', 'min': 33, 'max': 48, 'count': 0},
+            4: {'range': '49-64', 'min': 49, 'max': 64, 'count': 0},
+            5: {'range': '65-80', 'min': 65, 'max': 80, 'count': 0}
         }
         
         for resultado in resultados:
@@ -209,7 +208,7 @@ class EstatisticaService:
     def calcular_por_digito(self, resultados: List[Dict]) -> Dict:
         """
         Calcula distribuição por primeiro dígito
-        Dígito 0: 01-09, Dígito 1: 10-19, ..., Número 60
+        Dígito 0: 01-09, Dígito 1: 10-19, ..., Dígito 7: 70-80
         
         Args:
             resultados: Lista de resultados
@@ -224,15 +223,16 @@ class EstatisticaService:
             3: {'range': '30-39', 'count': 0},
             4: {'range': '40-49', 'count': 0},
             5: {'range': '50-59', 'count': 0},
-            6: {'range': '60', 'count': 0}
+            6: {'range': '60-69', 'count': 0},
+            7: {'range': '70-80', 'count': 0}
         }
         
         for resultado in resultados:
             dezenas = [int(d) for d in resultado.get('listaDezenas', [])]
             
             for dezena in dezenas:
-                if dezena == 60:
-                    digitos[6]['count'] += 1
+                if dezena >= 70:
+                    digitos[7]['count'] += 1
                 else:
                     primeiro_digito = dezena // 10
                     digitos[primeiro_digito]['count'] += 1
@@ -258,7 +258,7 @@ class EstatisticaService:
     
     def calcular_por_posicao_sorteio(self, resultados: List[Dict]) -> Dict:
         """
-        Calcula estatísticas por posição do sorteio (1ª a 6ª bola)
+        Calcula estatísticas por posição do sorteio (1ª a 5ª bola)
         Usa dezenasSorteadasOrdemSorteio da API
         
         Args:
@@ -267,18 +267,18 @@ class EstatisticaService:
         Returns:
             Dict com estatísticas por posição
         """
-        posicoes = {i: Counter() for i in range(1, 7)}
+        posicoes = {i: Counter() for i in range(1, 6)}
         
         for resultado in resultados:
             dezenas_ordem = resultado.get('dezenasSorteadasOrdemSorteio', [])
             
             for idx, dezena in enumerate(dezenas_ordem, start=1):
-                if idx <= 6:
+                if idx <= 5:
                     posicoes[idx][int(dezena)] += 1
         
         # Monta estatísticas por posição
         posicoes_lista = []
-        for pos in range(1, 7):
+        for pos in range(1, 6):
             top_numeros = []
             
             for numero, count in posicoes[pos].most_common(10):

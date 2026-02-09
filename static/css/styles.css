@@ -1,26 +1,27 @@
-/* Mega-Sena - Cores Oficiais */
+/* Quina - Cores Oficiais */
 :root {
-  --ms-100: #ffffff;
-  --ms-95:  #e9fbf4;
-  --ms-90:  #d4f7e9;
-  --ms-85:  #bef4de;
-  --ms-80:  #a8f0d3;
-  --ms-75:  #93ecc8;
-  --ms-70:  #7de8bd;
-  --ms-65:  #67e4b2;
-  --ms-60:  #52e0a7;
-  --ms-55:  #3cdd9c;
-  --ms-50:  #26d991;
-  --ms-45:  #22c383;
-  --ms-40:  #1fad74;
-  --ms-35:  #1B9A67; /* PRINCIPAL */
-  --ms-30:  #178257;
-  --ms-25:  #136c49;
-  --ms-20:  #0f573a;
-  --ms-15:  #0b412c;
-  --ms-10:  #082b1d;
-  --ms-5:   #04160f;
-  --ms-0:   #000000;
+  --qn-100: #ffffff;
+  --qn-95:  #ede6ff;
+  --qn-90:  #dbcdfe;
+  --qn-85:  #c9b3fe;
+  --qn-80:  #b69afe;
+  --qn-75:  #a481fe;
+  --qn-70:  #9268fd;
+  --qn-65:  #804efd;
+  --qn-60:  #6e35fd;
+  --qn-55:  #5c1cfd;
+  --qn-50:  #4903fc;
+  --qn-45:  #4202e3;
+  --qn-40:  #3b02ca;
+  --qn-35:  #3302b1;
+  --qn-30:  #2c0297;
+  --qn-26:  #260184; /* PRINCIPAL */
+  --qn-25:  #25017e;
+  --qn-20:  #1d0165;
+  --qn-15:  #16014c;
+  --qn-10:  #0f0132;
+  --qn-5:   #070019;
+  --qn-0:   #000000;
 }
 
 /* Reset e Base */
@@ -32,8 +33,8 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, var(--ms-95) 0%, var(--ms-100) 100%);
-  color: var(--ms-10);
+  background: linear-gradient(135deg, var(--qn-95) 0%, var(--qn-100) 100%);
+  color: var(--qn-10);
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -46,7 +47,7 @@ body {
 
 /* Header */
 header {
-  background: var(--ms-35);
+  background: var(--qn-26);
   color: white;
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -79,7 +80,7 @@ nav {
 }
 
 .nav-link:hover {
-  background: var(--ms-40);
+  background: var(--qn-40);
 }
 
 /* Main Content */
@@ -96,13 +97,13 @@ main {
 }
 
 .hero h1 {
-  color: var(--ms-35);
+  color: var(--qn-35);
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
 .hero p {
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
 }
@@ -121,23 +122,23 @@ main {
 }
 
 .btn-primary {
-  background: var(--ms-35);
+  background: var(--qn-35);
   color: white;
 }
 
 .btn-primary:hover {
-  background: var(--ms-40);
+  background: var(--qn-40);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(27, 154, 103, 0.3);
 }
 
 .btn-secondary {
-  background: var(--ms-60);
+  background: var(--qn-60);
   color: white;
 }
 
 .btn-secondary:hover {
-  background: var(--ms-65);
+  background: var(--qn-65);
 }
 
 .btn:disabled {
@@ -158,7 +159,7 @@ main {
 }
 
 .status-card h3 {
-  color: var(--ms-35);
+  color: var(--qn-35);
   margin-bottom: 1rem;
 }
 
@@ -166,7 +167,7 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0;
-  border-bottom: 1px solid var(--ms-90);
+  border-bottom: 1px solid var(--qn-90);
 }
 
 .status-item:last-child {
@@ -175,15 +176,15 @@ main {
 
 .status-label {
   font-weight: 600;
-  color: var(--ms-25);
+  color: var(--qn-25);
 }
 
 .status-value {
-  color: var(--ms-15);
+  color: var(--qn-15);
 }
 
 .status-online {
-  color: var(--ms-35);
+  color: var(--qn-35);
   font-weight: bold;
 }
 
@@ -193,7 +194,7 @@ main {
 }
 
 .resultados-section h2 {
-  color: var(--ms-35);
+  color: var(--qn-35);
   margin-bottom: 1.5rem;
 }
 
@@ -221,21 +222,21 @@ main {
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--ms-90);
+  border-bottom: 2px solid var(--qn-90);
 }
 
 .resultado-header h3 {
-  color: var(--ms-35);
+  color: var(--qn-35);
   font-size: 1.5rem;
 }
 
 .resultado-data {
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-weight: 600;
 }
 
 .resultado-body h4 {
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin: 1rem 0 0.5rem 0;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -249,7 +250,7 @@ main {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--ms-35) 0%, var(--ms-45) 100%);
+  background: linear-gradient(135deg, var(--qn-35) 0%, var(--qn-45) 100%);
   color: white;
   font-weight: bold;
   font-size: 1.2rem;
@@ -264,7 +265,7 @@ main {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--ms-50) 0%, var(--ms-60) 100%);
+  background: linear-gradient(135deg, var(--qn-50) 0%, var(--qn-60) 100%);
   color: white;
   font-weight: bold;
   font-size: 0.9rem;
@@ -283,7 +284,7 @@ main {
 .premios {
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--ms-90);
+  border-top: 1px solid var(--qn-90);
 }
 
 .premio-item {
@@ -292,22 +293,22 @@ main {
   gap: 1rem;
   padding: 0.8rem;
   margin: 0.5rem 0;
-  background: var(--ms-95);
+  background: var(--qn-95);
   border-radius: 5px;
 }
 
 .premio-faixa {
   font-weight: bold;
-  color: var(--ms-30);
+  color: var(--qn-30);
 }
 
 .premio-ganhadores {
-  color: var(--ms-25);
+  color: var(--qn-25);
 }
 
 .premio-valor {
   font-weight: bold;
-  color: var(--ms-35);
+  color: var(--qn-35);
   text-align: right;
 }
 
@@ -337,7 +338,7 @@ main {
 }
 
 .generator-section h2, .stats-section h2, .conferir-section h2 {
-  color: var(--ms-35);
+  color: var(--qn-35);
   margin-bottom: 1.5rem;
 }
 
@@ -349,14 +350,14 @@ main {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-weight: 600;
 }
 
 .form-control {
   width: 100%;
   padding: 0.8rem;
-  border: 2px solid var(--ms-90);
+  border: 2px solid var(--qn-90);
   border-radius: 5px;
   font-size: 1rem;
   transition: border-color 0.3s;
@@ -364,7 +365,7 @@ main {
 
 .form-control:focus {
   outline: none;
-  border-color: var(--ms-35);
+  border-color: var(--qn-35);
 }
 
 /* Palpites Gerados */
@@ -379,14 +380,14 @@ main {
 }
 
 .jogo-card {
-  background: var(--ms-95);
+  background: var(--qn-95);
   padding: 1rem;
   border-radius: 8px;
-  border-left: 4px solid var(--ms-35);
+  border-left: 4px solid var(--qn-35);
 }
 
 .jogo-card h4 {
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin-bottom: 0.8rem;
 }
 
@@ -398,7 +399,7 @@ main {
 
 /* Estatísticas */
 .stats-info {
-  background: var(--ms-95);
+  background: var(--qn-95);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
@@ -409,7 +410,7 @@ main {
 }
 
 .stat-group h3 {
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
@@ -427,7 +428,7 @@ main {
 .freq-value, .atraso-value {
   display: block;
   margin-top: 0.5rem;
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -441,17 +442,17 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 0.8rem;
-  background: var(--ms-95);
+  background: var(--qn-95);
   border-radius: 5px;
 }
 
 .dist-label {
   font-weight: 600;
-  color: var(--ms-30);
+  color: var(--qn-30);
 }
 
 .dist-value {
-  color: var(--ms-25);
+  color: var(--qn-25);
 }
 
 /* Faixas e Dígitos */
@@ -462,20 +463,20 @@ main {
 
 .faixa-item, .digito-item {
   padding: 1rem;
-  background: var(--ms-95);
+  background: var(--qn-95);
   border-radius: 5px;
 }
 
 .faixa-label, .digito-label {
   display: block;
   font-weight: 600;
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin-bottom: 0.5rem;
 }
 
 .faixa-bar, .digito-bar {
   height: 20px;
-  background: var(--ms-90);
+  background: var(--qn-90);
   border-radius: 10px;
   overflow: hidden;
   margin: 0.5rem 0;
@@ -483,13 +484,13 @@ main {
 
 .faixa-fill, .digito-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--ms-35) 0%, var(--ms-50) 100%);
+  background: linear-gradient(90deg, var(--qn-35) 0%, var(--qn-50) 100%);
   transition: width 0.5s;
 }
 
 .faixa-value, .digito-value {
   display: block;
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-size: 0.9rem;
   margin-top: 0.3rem;
 }
@@ -502,14 +503,14 @@ main {
 }
 
 .posicao-item {
-  background: var(--ms-95);
+  background: var(--qn-95);
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
 }
 
 .posicao-item h4 {
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin-bottom: 0.8rem;
   font-size: 0.95rem;
 }
@@ -525,9 +526,9 @@ main {
 .conferencia-resultado {
   margin-top: 2rem;
   padding: 2rem;
-  background: var(--ms-95);
+  background: var(--qn-95);
   border-radius: 10px;
-  border-left: 4px solid var(--ms-35);
+  border-left: 4px solid var(--qn-35);
 }
 
 .conferencia-resultado.premiado {
@@ -551,7 +552,7 @@ main {
 .acertos-info {
   font-size: 1.3rem;
   font-weight: bold;
-  color: var(--ms-30);
+  color: var(--qn-30);
   margin: 1rem 0;
 }
 
@@ -561,13 +562,13 @@ main {
   color: gold;
   text-align: center;
   padding: 1rem;
-  background: var(--ms-30);
+  background: var(--qn-30);
   border-radius: 8px;
   margin-top: 1rem;
 }
 
 .sem-premio {
-  color: var(--ms-25);
+  color: var(--qn-25);
   text-align: center;
   padding: 1rem;
 }
@@ -585,8 +586,8 @@ main {
 .spinner {
   width: 50px;
   height: 50px;
-  border: 4px solid var(--ms-90);
-  border-top-color: var(--ms-35);
+  border: 4px solid var(--qn-90);
+  border-top-color: var(--qn-35);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -604,7 +605,7 @@ main {
 .no-data, .error {
   text-align: center;
   padding: 2rem;
-  color: var(--ms-25);
+  color: var(--qn-25);
   font-size: 1.1rem;
 }
 
@@ -614,7 +615,7 @@ main {
 
 /* Footer */
 footer {
-  background: var(--ms-10);
+  background: var(--qn-10);
   color: white;
   text-align: center;
   padding: 2rem 0;

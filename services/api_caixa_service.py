@@ -1,6 +1,6 @@
 """
 Service para integração com a API oficial da Caixa Econômica Federal
-Endpoint: https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena
+Endpoint: https://servicebus2.caixa.gov.br/portaldeloterias/api/quina
 """
 import requests
 from typing import Dict, List, Optional
@@ -12,12 +12,12 @@ class ApiCaixaService:
     """Service para consumir a API da Caixa"""
     
     def __init__(self):
-        self.base_url = Config.API_MEGASENA_URL
+        self.base_url = Config.API_QUINA_URL
         self.model = ResultadoModel()
     
     def buscar_ultimo_concurso(self) -> Optional[Dict]:
         """
-        Busca o último concurso da Mega-Sena
+        Busca o último concurso da Quina
         
         Returns:
             Dict com dados do último concurso ou None em caso de erro
@@ -174,7 +174,7 @@ class ApiCaixaService:
         
         # Valida lista de dezenas
         dezenas = concurso.get('listaDezenas', [])
-        if len(dezenas) != 6:
+        if len(dezenas) != 5:
             return False
         
         return True
