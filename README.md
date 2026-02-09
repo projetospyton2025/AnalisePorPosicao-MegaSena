@@ -2,6 +2,41 @@
 
 Sistema completo em Python para geração e conferência de jogos da **Mega-Sena**, com análises estatísticas baseadas em dados reais da API oficial da Caixa Econômica Federal.
 
+## 📥 COMO BAIXAR O PROJETO
+
+### 💡 3 Formas de Baixar os Arquivos:
+
+#### **Opção 1: Download ZIP (Mais Fácil)** ⭐
+1. Clique no botão verde **"Code"** no topo desta página
+2. Selecione **"Download ZIP"**
+3. Extraia o arquivo ZIP em seu computador
+4. Pronto! Todos os arquivos estão na pasta extraída
+
+#### **Opção 2: Usando Git (Recomendado)**
+```bash
+git clone https://github.com/projetospyton2025/AnalisePorPosicao-MegaSena.git
+cd AnalisePorPosicao-MegaSena
+```
+
+#### **Opção 3: GitHub Desktop**
+1. Instale o [GitHub Desktop](https://desktop.github.com/)
+2. Clique em **"Code"** → **"Open with GitHub Desktop"**
+3. Escolha onde salvar o projeto
+
+### 📂 O que você receberá:
+- ✅ Código fonte completo (Python, HTML, CSS, JS)
+- ✅ Banco de dados SQLite configurado
+- ✅ Templates e estilos prontos
+- ✅ Documentação completa
+- ✅ Arquivo de dependências (requirements.txt)
+
+### 📚 Precisa de ajuda para baixar?
+- ⚡ **[GUIA DE INÍCIO RÁPIDO](QUICKSTART.md)** - Comece em 5 minutos!
+- 📖 **[GUIA COMPLETO DE DOWNLOAD](DOWNLOAD.md)** - Passo a passo com imagens e soluções de problemas
+- 🚀 **[Instruções de Instalação →](#-instalação-e-execução)**
+
+---
+
 ## 🌟 Características
 
 - ✅ Integração com API oficial da Caixa
