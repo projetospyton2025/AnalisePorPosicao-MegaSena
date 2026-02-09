@@ -5,7 +5,7 @@ Endpoints para integração e funcionalidades
 from flask import Blueprint, jsonify, request
 from services.api_caixa_service import ApiCaixaService
 from services.estatistica_service import EstatisticaService
-from services.megasena_service import MegaSenaService
+from services.quina_service import QuinaService
 from models.resultado_model import ResultadoModel
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
@@ -13,7 +13,7 @@ api_bp = Blueprint('api', __name__, url_prefix='/api')
 # Inicializa services
 api_caixa_service = ApiCaixaService()
 estatistica_service = EstatisticaService()
-megasena_service = MegaSenaService()
+quina_service = QuinaService()
 model = ResultadoModel()
 
 
@@ -88,10 +88,10 @@ def gerar_palpite():
     data = request.get_json()
     
     estrategia = data.get('estrategia', 'equilibrada')
-    quantidade_numeros = data.get('quantidade_numeros', 6)
+    quantidade_numeros = data.get('quantidade_numeros', 5)
     quantidade_jogos = data.get('quantidade_jogos', 1)
     
-    resultado = megasena_service.gerar_palpite(
+    resultado = quina_service.gerar_palpite(
         estrategia=estrategia,
         quantidade_numeros=quantidade_numeros,
         quantidade_jogos=quantidade_jogos
@@ -114,7 +114,7 @@ def conferir():
             'mensagem': 'Parâmetros inválidos. Informe numeros e concurso.'
         }), 400
     
-    resultado = megasena_service.conferir_jogo(numeros, concurso)
+    resultado = quina_service.conferir_jogo(numeros, concurso)
     
     return jsonify(resultado)
 

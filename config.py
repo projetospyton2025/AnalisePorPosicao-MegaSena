@@ -1,5 +1,5 @@
 """
-Configurações da aplicação Mega-Sena
+Configurações da aplicação Quina
 """
 import os
 from dotenv import load_dotenv
@@ -24,14 +24,14 @@ class Config:
     )
     
     # API
-    API_MEGASENA_URL = os.getenv(
-        'API_MEGASENA_URL',
-        'https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena'
+    API_QUINA_URL = os.getenv(
+        'API_QUINA_URL',
+        'https://servicebus2.caixa.gov.br/portaldeloterias/api/quina'
     )
     
-    # Mega-Sena Rules
+    # Quina Rules
     MIN_NUMEROS = 1
-    MAX_NUMEROS = 60
-    NUMEROS_SORTEADOS = 6
-    MIN_JOGO = 6
-    MAX_JOGO = 20
+    MAX_NUMEROS = 80
+    NUMEROS_SORTEADOS = 5
+    MIN_JOGO = 5
+    MAX_JOGO = 15
