@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}Palpites - Mega-Sena{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h1>🎯 Gerador de Palpites Inteligentes</h1>
+        <p>Gere palpites baseados em estatísticas reais da Mega-Sena</p>
+    </section>
+
+    <div class="content-grid">
+        <!-- Gerador de Palpites -->
+        <section class="generator-section">
+            <h2>Configurar Palpite</h2>
+            <form id="formPalpite">
+                <div class="form-group">
+                    <label for="estrategia">Estratégia:</label>
+                    <select id="estrategia" name="estrategia" class="form-control">
+                        <option value="equilibrada">Equilibrada (60% quentes + 40% frios)</option>
+                        <option value="agressiva">Agressiva (80% quentes + 20% frios)</option>
+                        <option value="conservadora">Conservadora (40% quentes + 60% frios)</option>
+                        <option value="mista">Mista (Distribuição uniforme por faixas)</option>
+                        <option value="atrasados">Atrasados (Números com maior atraso)</option>
+                        <option value="por_faixa">Por Faixa (Garante números de todas faixas)</option>
+                        <option value="por_digito">Por Dígito (Distribui por primeiro dígito)</option>
+                        <option value="aleatoria">Aleatória (Completamente aleatório)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantidade_numeros">Quantidade de Números (6-20):</label>
+                    <input type="number" id="quantidade_numeros" name="quantidade_numeros" 
+                           min="6" max="20" value="6" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantidade_jogos">Quantidade de Jogos (1-10):</label>
+                    <input type="number" id="quantidade_jogos" name="quantidade_jogos" 
+                           min="1" max="10" value="5" class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">🎲 Gerar Palpites</button>
+            </form>
+            
+            <div id="palpitesGerados" class="palpites-container"></div>
+        </section>
+
+        <!-- Estatísticas -->
+        <section class="stats-section">
+            <h2>📊 Estatísticas</h2>
+            <div id="loadingStats" class="loading">
+                <div class="spinner"></div>
+                <p>Carregando estatísticas...</p>
+            </div>
+            <div id="statsContainer"></div>
+        </section>
+    </div>
+
+    <!-- Conferir Jogo -->
+    <section class="conferir-section">
+        <h2>✅ Conferir Jogo</h2>
+        <form id="formConferir">
+            <div class="form-group">
+                <label for="numerosConferir">Números do Jogo (separados por vírgula):</label>
+                <input type="text" id="numerosConferir" placeholder="Ex: 1, 6, 24, 27, 28, 57" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="concursoConferir">Número do Concurso:</label>
+                <input type="number" id="concursoConferir" min="1" class="form-control">
+            </div>
+            
+            <button type="submit" class="btn btn-secondary">✓ Conferir</button>
+        </form>
+        
+        <div id="resultadoConferencia"></div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Carrega estatísticas ao iniciar
+    carregarEstatisticas();
+
+    // Event listeners
+    document.getElementById('formPalpite').addEventListener('submit', gerarPalpites);
+    document.getElementById('formConferir').addEventListener('submit', conferirJogo);
+
+    function carregarEstatisticas() {
+        const loading = document.getElementById('loadingStats');
+        const container = document.getElementById('statsContainer');
+        
+        loading.style.display = 'flex';
+        
+        fetch('/api/estatisticas')
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                
+                if (data.sucesso) {
+                    mostrarEstatisticas(data.estatisticas);
+                } else {
+                    container.innerHTML = '<p class="no-data">Nenhuma estatística disponível.</p>';
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                container.innerHTML = '<p class="error">Erro ao carregar estatísticas.</p>';
+                console.error('Erro:', error);
+            });
+    }
+
+    function mostrarEstatisticas(stats) {
+        const container = document.getElementById('statsContainer');
+        
+        let html = `<div class="stats-info"><p><strong>Total de Concursos:</strong> ${stats.total_concursos}</p></div>`;
+        
+        // Números Mais Frequentes
+        html += '<div class="stat-group"><h3>🔥 Números Mais Frequentes</h3><div class="numeros-grid">';
+        stats.frequencia.mais_frequentes.slice(0, 10).forEach(item => {
+            html += `<div class="numero-stat">
+                <span class="bola">${String(item.numero).padStart(2, '0')}</span>
+                <span class="freq-value">${item.frequencia}x</span>
+            </div>`;
+        });
+        html += '</div></div>';
+        
+        // Números Mais Atrasados
+        html += '<div class="stat-group"><h3>⏰ Números Mais Atrasados</h3><div class="numeros-grid">';
+        stats.atrasos.mais_atrasados.slice(0, 10).forEach(item => {
+            html += `<div class="numero-stat">
+                <span class="bola">${String(item.numero).padStart(2, '0')}</span>
+                <span class="atraso-value">${item.atraso} concursos</span>
+            </div>`;
+        });
+        html += '</div></div>';
+        
+        // Distribuição Pares/Ímpares
+        if (stats.pares_impares.distribuicao.length > 0) {
+            html += '<div class="stat-group"><h3>⚖️ Pares x Ímpares</h3>';
+            html += '<div class="distribuicao-grid">';
+            stats.pares_impares.distribuicao.slice(0, 5).forEach(item => {
+                html += `<div class="dist-item">
+                    <span class="dist-label">${item.padrao}</span>
+                    <span class="dist-value">${item.ocorrencias}x (${item.percentual}%)</span>
+                </div>`;
+            });
+            html += '</div></div>';
+        }
+        
+        // Por Faixa
+        if (stats.por_faixa.faixas.length > 0) {
+            html += '<div class="stat-group"><h3>📊 Distribuição por Faixa</h3>';
+            html += '<div class="faixas-grid">';
+            stats.por_faixa.faixas.forEach(faixa => {
+                html += `<div class="faixa-item">
+                    <span class="faixa-label">Faixa ${faixa.faixa} (${faixa.range})</span>
+                    <div class="faixa-bar">
+                        <div class="faixa-fill" style="width: ${faixa.percentual}%"></div>
+                    </div>
+                    <span class="faixa-value">${faixa.ocorrencias} (${faixa.percentual}%)</span>
+                </div>`;
+            });
+            html += '</div></div>';
+        }
+        
+        // Por Dígito
+        if (stats.por_digito.digitos.length > 0) {
+            html += '<div class="stat-group"><h3>🔢 Distribuição por Primeiro Dígito</h3>';
+            html += '<div class="digitos-grid">';
+            stats.por_digito.digitos.forEach(digito => {
+                html += `<div class="digito-item">
+                    <span class="digito-label">${digito.range}</span>
+                    <div class="digito-bar">
+                        <div class="digito-fill" style="width: ${digito.percentual}%"></div>
+                    </div>
+                    <span class="digito-value">${digito.ocorrencias} (${digito.percentual}%)</span>
+                </div>`;
+            });
+            html += '</div></div>';
+        }
+        
+        // Por Posição do Sorteio
+        if (stats.por_posicao_sorteio.posicoes.length > 0) {
+            html += '<div class="stat-group"><h3>🎱 Top 5 por Posição do Sorteio</h3>';
+            html += '<div class="posicoes-grid">';
+            stats.por_posicao_sorteio.posicoes.forEach(pos => {
+                html += `<div class="posicao-item">
+                    <h4>${pos.posicao}ª Bola</h4>
+                    <div class="top-numeros">`;
+                pos.top_numeros.slice(0, 5).forEach(num => {
+                    html += `<span class="bola-small">${String(num.numero).padStart(2, '0')}</span>`;
+                });
+                html += '</div></div>';
+            });
+            html += '</div></div>';
+        }
+        
+        container.innerHTML = html;
+    }
+
+    function gerarPalpites(e) {
+        e.preventDefault();
+        
+        const estrategia = document.getElementById('estrategia').value;
+        const quantidade_numeros = parseInt(document.getElementById('quantidade_numeros').value);
+        const quantidade_jogos = parseInt(document.getElementById('quantidade_jogos').value);
+        
+        const container = document.getElementById('palpitesGerados');
+        container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Gerando palpites...</p></div>';
+        
+        fetch('/api/gerar-palpite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ estrategia, quantidade_numeros, quantidade_jogos })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.sucesso) {
+                let html = `<h3>Palpites Gerados - ${data.estrategia}</h3>`;
+                html += '<div class="jogos-grid">';
+                
+                data.jogos.forEach((jogo, idx) => {
+                    html += `<div class="jogo-card">
+                        <h4>Jogo ${idx + 1}</h4>
+                        <div class="jogo-numeros">`;
+                    jogo.forEach(num => {
+                        html += `<span class="bola">${String(num).padStart(2, '0')}</span>`;
+                    });
+                    html += '</div></div>';
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `<p class="error">${data.mensagem}</p>`;
+            }
+        })
+        .catch(error => {
+            container.innerHTML = '<p class="error">Erro ao gerar palpites.</p>';
+            console.error('Erro:', error);
+        });
+    }
+
+    function conferirJogo(e) {
+        e.preventDefault();
+        
+        const numerosStr = document.getElementById('numerosConferir').value;
+        const concurso = parseInt(document.getElementById('concursoConferir').value);
+        
+        const numeros = numerosStr.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+        
+        if (numeros.length < 6 || !concurso) {
+            alert('Preencha todos os campos corretamente.');
+            return;
+        }
+        
+        const container = document.getElementById('resultadoConferencia');
+        container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Conferindo...</p></div>';
+        
+        fetch('/api/conferir', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ numeros, concurso })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.sucesso) {
+                let html = `<div class="conferencia-resultado ${data.premiacao ? 'premiado' : ''}">`;
+                html += `<h3>Resultado da Conferência</h3>`;
+                html += `<p><strong>Concurso:</strong> ${data.concurso} - ${data.data}</p>`;
+                html += `<div class="conferencia-numeros">
+                    <div><strong>Seu Jogo:</strong><div class="jogo-numeros">`;
+                data.numeros_jogo.forEach(n => {
+                    const acertou = data.acertos.includes(n);
+                    html += `<span class="bola ${acertou ? 'acertou' : ''}">${String(n).padStart(2, '0')}</span>`;
+                });
+                html += `</div></div>
+                    <div><strong>Sorteados:</strong><div class="jogo-numeros">`;
+                data.numeros_sorteados.forEach(n => {
+                    html += `<span class="bola">${String(n).padStart(2, '0')}</span>`;
+                });
+                html += `</div></div></div>`;
+                html += `<p class="acertos-info"><strong>Acertos:</strong> ${data.quantidade_acertos}</p>`;
+                
+                if (data.premiacao) {
+                    html += `<p class="premiacao-info">🎉 ${data.premiacao}</p>`;
+                } else {
+                    html += `<p class="sem-premio">Não houve premiação neste jogo.</p>`;
+                }
+                
+                html += '</div>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `<p class="error">${data.mensagem}</p>`;
+            }
+        })
+        .catch(error => {
+            container.innerHTML = '<p class="error">Erro ao conferir jogo.</p>';
+            console.error('Erro:', error);
+        });
+    }
+</script>
+{% endblock %}

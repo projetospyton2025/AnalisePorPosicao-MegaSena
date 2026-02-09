@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados - Mega-Sena{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h1>🎲 Resultados da Mega-Sena</h1>
+        <p>Acompanhe todos os resultados oficiais dos concursos</p>
+        <button id="btnAtualizar" class="btn btn-primary">
+            🔄 Atualizar Base de Dados
+        </button>
+    </section>
+
+    <section class="status-section">
+        <div class="status-card">
+            <h3>Status do Sistema</h3>
+            <div id="statusInfo">
+                <p>Carregando...</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="resultados-section">
+        <h2>Últimos Resultados</h2>
+        <div id="loadingResultados" class="loading">
+            <div class="spinner"></div>
+            <p>Carregando resultados...</p>
+        </div>
+        <div id="resultadosContainer"></div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Carrega status ao iniciar
+    carregarStatus();
+    carregarResultados();
+
+    // Event listener para botão atualizar
+    document.getElementById('btnAtualizar').addEventListener('click', atualizarBase);
+
+    function carregarStatus() {
+        fetch('/api/status')
+            .then(response => response.json())
+            .then(data => {
+                const statusDiv = document.getElementById('statusInfo');
+                if (data.sucesso) {
+                    statusDiv.innerHTML = `
+                        <div class="status-item">
+                            <span class="status-label">Status:</span>
+                            <span class="status-value status-online">✓ Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Total de Concursos:</span>
+                            <span class="status-value">${data.total_concursos}</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Último Concurso:</span>
+                            <span class="status-value">${data.ultimo_concurso || 'N/A'}</span>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar status:', error);
+            });
+    }
+
+    function carregarResultados() {
+        const loading = document.getElementById('loadingResultados');
+        const container = document.getElementById('resultadosContainer');
+        
+        loading.style.display = 'flex';
+        container.innerHTML = '';
+
+        fetch('/api/resultados?limite=20')
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                
+                if (data.sucesso && data.resultados.length > 0) {
+                    data.resultados.forEach(resultado => {
+                        container.appendChild(criarCardResultado(resultado));
+                    });
+                } else {
+                    container.innerHTML = '<p class="no-data">Nenhum resultado encontrado. Clique em "Atualizar Base de Dados".</p>';
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                container.innerHTML = '<p class="error">Erro ao carregar resultados.</p>';
+                console.error('Erro:', error);
+            });
+    }
+
+    function criarCardResultado(resultado) {
+        const card = document.createElement('div');
+        card.className = 'resultado-card';
+        
+        // Dezenas sorteadas
+        const dezenas = resultado.listaDezenas.map(d => 
+            `<span class="bola">${String(d).padStart(2, '0')}</span>`
+        ).join('');
+        
+        // Ordem do sorteio
+        const ordemSorteio = resultado.dezenasSorteadasOrdemSorteio.map(d => 
+            `<span class="bola-small">${String(d).padStart(2, '0')}</span>`
+        ).join('');
+        
+        // Ganhadores
+        let ganhadoresHTML = '';
+        if (resultado.listaRateioPremio && resultado.listaRateioPremio.length > 0) {
+            ganhadoresHTML = '<div class="premios">';
+            resultado.listaRateioPremio.forEach(premio => {
+                ganhadoresHTML += `
+                    <div class="premio-item">
+                        <span class="premio-faixa">${premio.descricaoFaixa}</span>
+                        <span class="premio-ganhadores">${premio.numeroDeGanhadores} ganhador(es)</span>
+                        <span class="premio-valor">R$ ${formatarValor(premio.valorPremio)}</span>
+                    </div>
+                `;
+            });
+            ganhadoresHTML += '</div>';
+        }
+        
+        card.innerHTML = `
+            <div class="resultado-header">
+                <h3>Concurso ${resultado.numero}</h3>
+                <span class="resultado-data">${resultado.dataApuracao}</span>
+            </div>
+            <div class="resultado-body">
+                <div class="dezenas-section">
+                    <h4>Números Sorteados (Ordem Crescente)</h4>
+                    <div class="dezenas">${dezenas}</div>
+                </div>
+                <div class="ordem-section">
+                    <h4>Ordem do Sorteio</h4>
+                    <div class="ordem">${ordemSorteio}</div>
+                </div>
+                ${ganhadoresHTML}
+                ${resultado.acumulado ? '<span class="badge-acumulado">ACUMULOU!</span>' : ''}
+            </div>
+        `;
+        
+        return card;
+    }
+
+    function atualizarBase() {
+        const btn = document.getElementById('btnAtualizar');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Atualizando...';
+        
+        fetch('/api/atualizar', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    alert(data.mensagem);
+                    carregarStatus();
+                    carregarResultados();
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(error => {
+                alert('Erro ao atualizar base de dados.');
+                console.error('Erro:', error);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '🔄 Atualizar Base de Dados';
+            });
+    }
+
+    function formatarValor(valor) {
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(valor);
+    }
+</script>
+{% endblock %}
