@@ -31,6 +31,7 @@ cd AnalisePorPosicao-MegaSena
 - ✅ Arquivo de dependências (requirements.txt)
 
 ### 📚 Precisa de ajuda para baixar?
+- 📍 **[ONDE ESTÃO OS ARQUIVOS?](ONDE-ESTAO-ARQUIVOS.md)** - Guia visual de localização
 - ⚡ **[GUIA DE INÍCIO RÁPIDO](QUICKSTART.md)** - Comece em 5 minutos!
 - 📖 **[GUIA COMPLETO DE DOWNLOAD](DOWNLOAD.md)** - Passo a passo com imagens e soluções de problemas
 - 🚀 **[Instruções de Instalação →](#-instalação-e-execução)**
